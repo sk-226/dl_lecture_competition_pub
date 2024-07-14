@@ -110,6 +110,7 @@ def main(args: DictConfig):
     # ------------------
     #       Model
     # ------------------
+    
     model = EVFlowNet(args.train).to(device)
 
     # ------------------

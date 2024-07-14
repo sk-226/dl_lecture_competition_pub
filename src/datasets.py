@@ -16,6 +16,7 @@ import torch.utils.data
 from torchvision.transforms import RandomCrop
 from torchvision import transforms as tf
 from torch.utils.data import Dataset
+from torchvision.transforms import GaussianBlur
 
 
 from src.utils import RepresentationType, VoxelGrid, flow_16bit_to_float
@@ -353,6 +354,7 @@ class Sequence(Dataset):
             output['flow_gt'
                 ] = [torch.tensor(x) for x in self.load_flow(self.flow_png[index])]
 
+            output['flow_gt'][0] = GaussianBlur(kernel_size=(3, 3), sigma=(0.8, 0.8))(output['flow_gt'][0])
             output['flow_gt'
                 ][0] = torch.moveaxis(output['flow_gt'][0], -1, 0)
             output['flow_gt'
